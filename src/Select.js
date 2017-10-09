@@ -526,7 +526,12 @@ class Select extends React.Component {
 				inputValue: this.handleInputValueChange(updatedValue),
 				isOpen: !this.props.closeOnSelect,
 			}, () => {
-				this.addValue(value);
+				var valueArray = this.getValueArray(this.props.value);
+				if (valueArray.indexOf(value) > -1) {
+					this.removeValue(value);
+				} else {
+					this.addValue(value);
+				}
 			});
 		} else {
 			this.setState({
@@ -1040,7 +1045,7 @@ class Select extends React.Component {
 					{this.renderClear()}
 					{this.renderArrow()}
 				</div>
-				{isOpen ? this.renderOuter(options, !this.props.multi ? valueArray : null, focusedOption) : null}
+				{isOpen ? this.renderOuter(options, valueArray, focusedOption) : null}
 			</div>
 		);
 	}
